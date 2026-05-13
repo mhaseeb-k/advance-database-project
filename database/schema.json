@@ -1,0 +1,209 @@
+{
+  "collections": {
+    "SocialMediaDB.comments": {
+      "ns": "SocialMediaDB.comments",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "post_id",
+          "text",
+          "timestamp",
+          "user_id",
+          "version"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "post_id": {
+            "bsonType": "objectId"
+          },
+          "text": {
+            "bsonType": "string"
+          },
+          "timestamp": {
+            "bsonType": "date"
+          },
+          "user_id": {
+            "bsonType": "objectId"
+          },
+          "version": {
+            "bsonType": "int"
+          }
+        }
+      }
+    },
+    "SocialMediaDB.posts": {
+      "ns": "SocialMediaDB.posts",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "author",
+          "content",
+          "metrics",
+          "timestamp",
+          "version"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "author": {
+            "bsonType": "object",
+            "properties": {
+              "user_id": {
+                "bsonType": "objectId"
+              },
+              "username": {
+                "bsonType": "string"
+              }
+            },
+            "required": [
+              "user_id",
+              "username"
+            ]
+          },
+          "content": {
+            "bsonType": "string"
+          },
+          "metrics": {
+            "bsonType": "object",
+            "properties": {
+              "comment_count": {
+                "bsonType": "int"
+              },
+              "likes": {
+                "bsonType": "int"
+              }
+            },
+            "required": [
+              "comment_count",
+              "likes"
+            ]
+          },
+          "timestamp": {
+            "bsonType": "date"
+          },
+          "version": {
+            "bsonType": "int"
+          }
+        }
+      }
+    },
+    "SocialMediaDB.users": {
+      "ns": "SocialMediaDB.users",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "email",
+          "joined_at",
+          "password",
+          "stats",
+          "username",
+          "version"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "email": {
+            "bsonType": "string"
+          },
+          "joined_at": {
+            "bsonType": "date"
+          },
+          "password": {
+            "bsonType": "string"
+          },
+          "stats": {
+            "bsonType": "object",
+            "properties": {
+              "follower_count": {
+                "bsonType": "int"
+              },
+              "post_count": {
+                "bsonType": "int"
+              }
+            },
+            "required": [
+              "follower_count",
+              "post_count"
+            ]
+          },
+          "username": {
+            "bsonType": "string"
+          },
+          "version": {
+            "bsonType": "int"
+          }
+        }
+      }
+    }
+  },
+  "relationships": [
+    {
+      "id": "8451dc0d-3f8c-43a3-afe2-41c06e8c7980",
+      "relationship": [
+        {
+          "ns": "SocialMediaDB.comments",
+          "fields": [
+            "post_id"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "SocialMediaDB.posts",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "e96e374f-5221-4d91-bde0-16922ca085fb",
+      "relationship": [
+        {
+          "ns": "SocialMediaDB.comments",
+          "fields": [
+            "user_id"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "SocialMediaDB.users",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "4da15178-6048-4d1d-97c6-ee857d5093af",
+      "relationship": [
+        {
+          "ns": "SocialMediaDB.posts",
+          "fields": [
+            "author",
+            "user_id"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "SocialMediaDB.users",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    }
+  ]
+}
